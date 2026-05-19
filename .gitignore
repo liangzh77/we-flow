@@ -1,0 +1,9 @@
+data/
+*.db
+*.db-shm
+*.db-wal
+*.exe
+node_modules/
+package-lock.json
+package.json
+wechat-window.png

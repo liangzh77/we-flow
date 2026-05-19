@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>we-flow</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>we-flow</h1>
+        <p>本机微信聊天记录工作台</p>
+      </div>
+      <div class="settings">
+        <label>
+          最近
+          <input id="daysInput" type="number" min="1" max="3650" value="7" />
+          天
+        </label>
+        <button id="saveSettingsBtn">保存</button>
+        <button id="syncBtn" class="primary">同步白名单聊天</button>
+        <button id="pollBtn">拉取增量新消息</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel sessions-panel">
+        <div class="panel-head">
+          <h2>最近会话</h2>
+          <button id="loadSessionsBtn">刷新</button>
+        </div>
+        <div id="sessionsList" class="list"></div>
+      </section>
+
+      <section class="panel whitelist-panel">
+        <div class="panel-head">
+          <h2>白名单</h2>
+          <button id="loadWhitelistBtn">刷新</button>
+        </div>
+        <div id="whitelistList" class="list"></div>
+      </section>
+
+      <section class="panel messages-panel">
+        <div class="panel-head">
+          <h2>聊天记录</h2>
+          <div class="search-row">
+            <select id="chatFilter">
+              <option value="">全部白名单会话</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="搜索内容、发送人、会话" />
+            <button id="searchBtn">搜索</button>
+          </div>
+        </div>
+        <div id="status" class="status"></div>
+        <div id="messagesList" class="messages"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
