@@ -14,6 +14,7 @@ import (
 func main() {
 	addr := env("WE_FLOW_ADDR", "127.0.0.1:8787")
 	dbPath := env("WE_FLOW_DB", "data/we-flow.db")
+	wxBin := env("WE_FLOW_WX_BIN", "wx")
 
 	db, err := store.Open(dbPath)
 	if err != nil {
@@ -21,7 +22,7 @@ func main() {
 	}
 	defer db.Close()
 
-	wxClient := wx.New("wx", 45*time.Second)
+	wxClient := wx.New(wxBin, 45*time.Second)
 	app := server.New(db, wxClient, "web")
 
 	log.Printf("we-flow listening on http://%s", addr)

@@ -172,8 +172,8 @@ async function loadMessages() {
 
 function renderSessions() {
   const known = new Set(state.whitelist.map((w) => w.chat_id));
-  el("sessionsList").innerHTML = state.sessions
-    .map((s) => {
+  el("sessionsList").innerHTML = state.sessions.length
+    ? state.sessions.map((s) => {
       const id = chatIDOf(s);
       const added = known.has(id);
       return `
@@ -189,7 +189,8 @@ function renderSessions() {
           </div>
         </div>`;
     })
-    .join("");
+    .join("")
+    : `<div class="item"><div class="item-summary">点击“刷新”读取最近会话。需要本机已安装并初始化只读 wx-cli。</div></div>`;
   el("sessionsList").querySelectorAll("[data-add]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-add");
@@ -302,8 +303,9 @@ async function boot() {
 
   await loadSettings();
   await loadWhitelist();
-  await loadSessions();
+  renderSessions();
   await loadMessages();
+  setStatus("服务已启动。读取最近会话需要本机已安装并初始化只读 wx-cli。");
 }
 
 boot().catch(showError);

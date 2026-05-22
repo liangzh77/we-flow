@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
+	"errors"
 	"encoding/json"
 	"fmt"
 	"os/exec"
@@ -125,6 +126,9 @@ func (c *Client) runJSON(ctx context.Context, dst any, args ...string) error {
 		return ctx.Err()
 	}
 	if err != nil {
+		if errors.Is(err, exec.ErrNotFound) {
+			return fmt.Errorf("找不到 wx-cli 命令 %q。请安装只读工具 @jackwener/wx-cli，或用 WE_FLOW_WX_BIN 指向 wx 可执行文件", c.bin)
+		}
 		return fmt.Errorf("wx %v: %w: %s", args, err, string(raw))
 	}
 	if err := json.Unmarshal(raw, dst); err != nil {
